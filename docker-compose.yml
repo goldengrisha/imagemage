@@ -1,0 +1,41 @@
+version: "3"
+services:
+  server1:
+    build:
+      context: ./server1/
+      dockerfile: ./Dockerfile
+    ports:
+      - "5001:5000"
+    depends_on:
+      - redis
+    links:
+     - redis
+  server2:
+    build:
+      context: ./server2/
+      dockerfile: ./Dockerfile
+    ports:
+      - "5002:5000"
+    depends_on:
+      - redis
+  server3:
+    build:
+      context: ./server3/
+      dockerfile: ./Dockerfile
+    ports:
+      - "5003:5000"
+    depends_on:
+      - redis
+  frontend:
+    build:
+      context: ./frontend/
+      dockerfile: ./Dockerfile
+    ports:
+      - "8081:8081"
+  redis:
+    image: redis
+    container_name: cache
+    expose:
+      - 6379
+    ports:
+      - "6379:6379"
